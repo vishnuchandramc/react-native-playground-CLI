@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScreenContent} from '../components/ScreenContent';
 import Colors from '../constants/Colors';
 import {defaultStyles} from '../constants/Styles';
@@ -8,43 +8,87 @@ import {SCREENS} from '../constants/Strings';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Animated, {
   useSharedValue,
-  withSpring,
-  useAnimatedStyle,
-  Easing,
   withTiming,
+  useAnimatedStyle,
 } from 'react-native-reanimated';
 
 const LaunchScreen = () => {
+  const [appIcon, setAppIcon] = useState('Hello');
   const navigation = useNavigation<NativeStackNavigationProp<{route: {}}>>();
+
   useEffect(() => {
     console.log('Launch Screen');
-    startAnimation();
-    // setTimeout(() => {
-    //   //@ts-ignore
-    //   navigation.replace(SCREENS.LOGIN);
-    // }, 5000);
+
+    setTimeout(() => {
+      setAppIcon('');
+      startTextAnimation();
+    }, 800);
+    setTimeout(() => {
+      startStampAnimation();
+    }, 1200);
+    setTimeout(() => {
+      //@ts-ignore
+      navigation.replace(SCREENS.LOGIN);
+    }, 2800);
   }, []);
 
+  const textOpacity = useSharedValue(0); // Initial opacity value set to 0
+  const stampOpacity = useSharedValue(0); // Initial opacity value set to 0
   const scale = useSharedValue(8); // Initial scale value set to zoom in
 
-  const startAnimation = () => {
-    scale.value = withTiming(1, {
+  const startTextAnimation = () => {
+    textOpacity.value = withTiming(1, {
       duration: 400,
     });
   };
 
-  const animatedStyle = useAnimatedStyle(() => {
+  const startStampAnimation = () => {
+    stampOpacity.value = withTiming(1, {
+      duration: 500,
+    });
+    scale.value = withTiming(1, {
+      duration: 500,
+    });
+  };
+
+  const textAnimatedStyle = useAnimatedStyle(() => {
     return {
+      opacity: textOpacity.value,
+    };
+  });
+
+  const stampAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: stampOpacity.value,
       transform: [{scale: scale.value}],
     };
   });
+
   return (
     <ScreenContent backgroundColor={Colors.primary} barstyle="light-content">
       <View style={styles.container}>
-        <Text style={[defaultStyles.headline, {color: Colors.light}]}>
+        <Animated.Text
+          style={[
+            defaultStyles.headline,
+            {color: Colors.light},
+            textAnimatedStyle,
+          ]}>
           tamaCLI
-        </Text>
-        <Animated.View style={[styles.stamp, animatedStyle]} />
+        </Animated.Text>
+        {appIcon && (
+          <Text style={[defaultStyles.headline, {color: Colors.light}]}>
+            {appIcon}
+          </Text>
+        )}
+        <Animated.View style={[styles.stamp, stampAnimatedStyle]}>
+          <Text
+            style={[
+              defaultStyles.headline,
+              {color: Colors.light, textAlign: 'center'},
+            ]}>
+            Approved by me
+          </Text>
+        </Animated.View>
       </View>
     </ScreenContent>
   );
@@ -59,9 +103,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   stamp: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: 'red',
+    width: 150,
+    height: 150,
+    borderRadius: 100,
+    backgroundColor: 'transparent',
+    margin: 12,
+    borderWidth: 5,
+    borderColor: Colors.lightGray,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
