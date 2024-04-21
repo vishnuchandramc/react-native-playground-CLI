@@ -13,7 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 const LaunchScreen = () => {
-  const [appIcon, setAppIcon] = useState('Hello');
+  const [appIcon, setAppIcon] = useState('React Native App');
   const navigation = useNavigation<NativeStackNavigationProp<{route: {}}>>();
 
   useEffect(() => {
@@ -70,10 +70,10 @@ const LaunchScreen = () => {
         <Animated.Text
           style={[
             defaultStyles.headline,
-            {color: Colors.light},
+            {color: Colors.light, textAlign: 'center'},
             textAnimatedStyle,
           ]}>
-          tamaCLI
+          {`React Native\nApplication\nplayground`}
         </Animated.Text>
         {appIcon && (
           <Text style={[defaultStyles.headline, {color: Colors.light}]}>

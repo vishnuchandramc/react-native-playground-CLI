@@ -10,7 +10,7 @@ import {defaultStyles} from '../constants/Styles';
 import Colors from '../constants/Colors';
 
 type barStyle = 'dark-content' | 'light-content';
-const keyboardVerticalOffset = Platform.OS === 'ios' ? 20 : 0;
+const keyboardVerticalOffset = 20;
 
 type ScreenContentProps = {
   title?: string;
@@ -36,7 +36,7 @@ export const ScreenContent = ({
       />
       <KeyboardAvoidingView
         style={[defaultStyles.container]}
-        behavior="padding"
+        behavior={Platform.OS == 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={keyboardVerticalOffset}>
         {children}
       </KeyboardAvoidingView>

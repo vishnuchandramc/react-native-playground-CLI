@@ -19,14 +19,19 @@ const Login = () => {
   };
   return (
     <ScreenContent>
-      <Text style={{color: Colors.primary}}>App Playgrounds</Text>
+      <Text
+        style={{color: Colors.primary, fontFamily: fonts.regular.fontFamily}}>
+        App Playgrounds
+      </Text>
       <Text style={[defaultStyles.headline, {color: Colors.dark}]}>
         Hello welcome to the world of coding
       </Text>
-      <Text style={defaultStyles.normalText}>Let's gets started!</Text>
+      <Text style={[defaultStyles.normalText, {color: Colors.dark}]}>
+        Let's gets started!
+      </Text>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, {width: 75}]}
           placeholder="Country code"
           placeholderTextColor={Colors.gray}
           value={countryCode}
@@ -73,6 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     fontSize: 20,
     marginRight: 10,
+    color: Colors.dark,
   },
   linkButton: {
     fontFamily: fonts.regular.fontFamily,

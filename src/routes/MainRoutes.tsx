@@ -1,16 +1,18 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../screens/auth/Login';
 import {SCREENS} from '../constants/Strings';
 import LaunchScreen from '../screens/LaunchScreen';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 
 const MainRoutes = () => {
-  const Stack = createNativeStackNavigator();
+  const Stack = createStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={SCREENS.LAUNCHER}>
+      <Stack.Navigator
+        screenOptions={{...TransitionPresets.SlideFromRightIOS}}
+        initialRouteName={SCREENS.LAUNCHER}>
         <Stack.Screen
           name={SCREENS.LAUNCHER}
           component={LaunchScreen}
