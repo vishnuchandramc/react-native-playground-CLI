@@ -29,7 +29,7 @@ const LaunchScreen = () => {
     setTimeout(() => {
       //@ts-ignore
       navigation.replace(SCREENS.LOGIN);
-    }, 2800);
+    }, 3000);
   }, []);
 
   const textOpacity = useSharedValue(0); // Initial opacity value set to 0
@@ -68,6 +68,7 @@ const LaunchScreen = () => {
     <ScreenContent backgroundColor={Colors.primary} barstyle="light-content">
       <View style={styles.container}>
         <Animated.Text
+          allowFontScaling={false}
           style={[
             defaultStyles.headline,
             {color: Colors.light, textAlign: 'center'},
@@ -82,6 +83,7 @@ const LaunchScreen = () => {
         )}
         <Animated.View style={[styles.stamp, stampAnimatedStyle]}>
           <Text
+            allowFontScaling={false}
             style={[
               defaultStyles.headline,
               {color: Colors.light, textAlign: 'center'},

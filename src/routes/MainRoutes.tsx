@@ -5,13 +5,20 @@ import Login from '../screens/auth/Login';
 import {SCREENS} from '../constants/Strings';
 import LaunchScreen from '../screens/LaunchScreen';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import SignUp from '../screens/auth/SignUp';
 
 const MainRoutes = () => {
   const Stack = createStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{...TransitionPresets.SlideFromRightIOS}}
+        screenOptions={{
+          ...TransitionPresets.SlideFromRightIOS,
+          transitionSpec: {
+            open: {animation: 'spring', config: {stiffness: 50}},
+            close: {animation: 'spring', config: {stiffness: 50}},
+          },
+        }}
         initialRouteName={SCREENS.LAUNCHER}>
         <Stack.Screen
           name={SCREENS.LAUNCHER}
@@ -23,6 +30,13 @@ const MainRoutes = () => {
         <Stack.Screen
           name={SCREENS.LOGIN}
           component={Login}
+          options={() => ({
+            headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name={SCREENS.SIGNUP}
+          component={SignUp}
           options={() => ({
             headerShown: false,
           })}

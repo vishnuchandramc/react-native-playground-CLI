@@ -1,32 +1,39 @@
 import {StyleSheet} from 'react-native';
 import Colors from './Colors';
 import {fonts} from './Fonts';
+import {
+  fontPixel,
+  pixelSizeHorizontal,
+  pixelSizeVertical,
+  widthPixel,
+} from './Layout';
 
 export const defaultStyles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: pixelSizeHorizontal(12),
   },
   headline: {
-    fontSize: 28,
-    paddingVertical: 6,
+    fontSize: fontPixel(28),
+    paddingVertical: pixelSizeVertical(6),
     color: Colors.dark,
     fontFamily: fonts.bold.fontFamily,
   },
   normalText: {
-    fontSize: 20,
-    paddingVertical: 6,
+    fontSize: fontPixel(20),
+    paddingVertical: pixelSizeVertical(6),
     fontFamily: fonts.medium.fontFamily,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: fontPixel(18),
     fontFamily: fonts.medium.fontFamily,
     color: Colors.light,
   },
   pillButton: {
-    padding: 20,
+    paddingHorizontal: pixelSizeHorizontal(20),
+    paddingVertical: pixelSizeVertical(20),
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 50,
+    borderRadius: widthPixel(50),
   },
 });
