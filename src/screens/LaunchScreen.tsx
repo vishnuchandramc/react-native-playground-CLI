@@ -28,7 +28,7 @@ const LaunchScreen = () => {
     }, 1200);
     setTimeout(() => {
       //@ts-ignore
-      navigation.replace(SCREENS.LOGIN);
+      navigation.replace(SCREENS.SIGNUP);
     }, 3000);
   }, []);
 
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     margin: 12,
     borderWidth: 5,
-    borderColor: Colors.lightGray,
+    borderColor: Colors.light,
     justifyContent: 'center',
     alignItems: 'center',
   },

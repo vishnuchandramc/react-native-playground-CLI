@@ -9,6 +9,19 @@ import SignUp from '../screens/auth/SignUp';
 
 const MainRoutes = () => {
   const Stack = createStackNavigator();
+
+  const config = {
+    animation: 'spring',
+    config: {
+      stiffness: 1000,
+      damping: 500,
+      mass: 3,
+      overshootClamping: true,
+      restDisplacementThreshold: 0.01,
+      restSpeedThreshold: 0.01,
+    },
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -28,17 +41,22 @@ const MainRoutes = () => {
           })}
         />
         <Stack.Screen
-          name={SCREENS.LOGIN}
-          component={Login}
+          name={SCREENS.SIGNUP}
+          component={SignUp}
           options={() => ({
             headerShown: false,
           })}
         />
         <Stack.Screen
-          name={SCREENS.SIGNUP}
-          component={SignUp}
+          name={SCREENS.LOGIN}
+          component={Login}
+          //@ts-ignore
           options={() => ({
             headerShown: false,
+            transitionSpec: {
+              open: config,
+              close: config,
+            },
           })}
         />
       </Stack.Navigator>
