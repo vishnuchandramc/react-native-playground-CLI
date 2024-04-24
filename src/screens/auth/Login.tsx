@@ -4,10 +4,12 @@ import {ScreenContent} from '../../components/ScreenContent';
 import {defaultStyles} from '../../constants/Styles';
 import Colors from '../../constants/Colors';
 import {fonts} from '../../constants/Fonts';
+import ScrollViewScreen from '../../components/DynamicHeader';
 
 const Login = () => {
   return (
     <ScreenContent containerStyle={defaultStyles.gap}>
+      <ScrollViewScreen />
       <Text
         style={{color: Colors.primary, fontFamily: fonts.regular.fontFamily}}>
         App Playgrounds

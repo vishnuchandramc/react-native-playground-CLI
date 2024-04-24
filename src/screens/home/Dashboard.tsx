@@ -1,4 +1,5 @@
 import {
+  Animated,
   FlatList,
   ScrollView,
   StyleSheet,
@@ -6,7 +7,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {ScreenContent} from '../../components/ScreenContent';
 import {defaultStyles} from '../../constants/Styles';
 import {
@@ -20,6 +21,8 @@ import Colors from '../../constants/Colors';
 import {fonts} from '../../constants/Fonts';
 import {data} from '../../models/DataModel';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {FlashList} from '@shopify/flash-list';
+import DynamicHeader from '../../components/DynamicHeader';
 
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,60 +36,101 @@ const Dashboard = () => {
           {description}
         </Text>
         <View style={{flex: 1}} />
-        <TouchableOpacity
+        <View
           style={{
-            backgroundColor: Colors.primary,
-            width: widthPixel(100),
-            padding: pixelSizeVertical(10),
-            borderRadius: pixelSizeHorizontal(40),
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: pixelSizeVertical(8),
+            width: '100%',
+            flexDirection: 'row-reverse',
           }}>
-          <Text
+          <TouchableOpacity
             style={{
-              fontFamily: fonts.medium.fontFamily,
-              fontSize: 16,
-              color: Colors.light,
+              backgroundColor: Colors.primary,
+              width: widthPixel(100),
+              padding: pixelSizeVertical(10),
+              borderRadius: pixelSizeHorizontal(40),
+              justifyContent: 'center',
+              alignItems: 'center',
+              margin: pixelSizeVertical(8),
             }}>
-            View
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                fontFamily: fonts.medium.fontFamily,
+                fontSize: 16,
+                color: Colors.light,
+              }}>
+              View
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
+
+  const Header_Max_Height = 200;
+  const Header_Min_Height = 100;
+  const Scroll_Distance = Header_Max_Height - Header_Min_Height;
+  const scrollOffsetY = useRef(new Animated.Value(0)).current;
+
+  const animatedHeaderColor = scrollOffsetY.interpolate({
+    inputRange: [0, Scroll_Distance],
+    outputRange: ['#f00', Colors.background],
+    extrapolate: 'clamp',
+  });
+
   return (
     <ScreenContent>
-      <Text
+      <Animated.View
+        style={[
+          styles.header,
+          {
+            backgroundColor: animatedHeaderColor,
+          },
+        ]}>
+        <Text style={defaultStyles.headline}>Dashboard</Text>
+
+        {/* <Text
         style={[
           defaultStyles.headline,
           {paddingHorizontal: pixelSizeHorizontal(16)},
         ]}>
         Dashboard
-      </Text>
-      <Text
-        style={
-          styles.hero
-        }>{`Welcome Rahul\nWhat your plan to learn today😉`}</Text>
-      <TextInput
-        style={[styles.input]}
-        placeholder="Search"
-        placeholderTextColor={Colors.gray}
-        keyboardType="phone-pad"
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
-      <ScrollView nestedScrollEnabled>
+      </Text> */}
+      </Animated.View>
+
+      <ScrollView
+        nestedScrollEnabled
+        scrollEventThrottle={5}
+        showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollOffsetY}}}],
+          {
+            useNativeDriver: false,
+          },
+        )}>
+        <Animated.View style={{backgroundColor: animatedHeaderColor}}>
+          <TextInput
+            style={[styles.input]}
+            placeholder="Search"
+            placeholderTextColor={Colors.gray}
+            keyboardType="phone-pad"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+          <Text
+            style={
+              styles.hero
+            }>{`Welcome Rahul\nWhat your plan to learn today😉`}</Text>
+        </Animated.View>
         <Text style={styles.title}>Programming Languages</Text>
         <Text style={styles.description}>
           Learn programming language as your choice, Checkout now!
         </Text>
-        <FlatList
+        <FlashList
           horizontal
           data={data.languages}
           keyExtractor={item => item.id}
+          estimatedItemSize={200}
           renderItem={renderItem}
-          style={styles.flatlist}
+          ListHeaderComponent={<View style={{paddingHorizontal: 6}} />}
           showsHorizontalScrollIndicator={false}
           ListFooterComponent={<View style={styles.flatlist} />}
         />
@@ -94,28 +138,35 @@ const Dashboard = () => {
         <Text style={styles.description}>
           Learn programming language as your choice, Checkout now!
         </Text>
-        <FlatList
+        <FlashList
           horizontal
           data={data.databases}
           keyExtractor={item => item.id}
+          estimatedItemSize={200}
           renderItem={renderItem}
+          ListHeaderComponent={<View style={{paddingHorizontal: 6}} />}
           showsHorizontalScrollIndicator={false}
-          style={styles.flatlist}
           ListFooterComponent={<View style={styles.flatlist} />}
         />
         <Text style={styles.title}>Frameworks</Text>
         <Text style={styles.description}>
           Learn programming language as your choice, Checkout now!
         </Text>
-        <FlatList
+        <FlashList
           horizontal
           data={data.frameworks}
           keyExtractor={item => item.id}
+          estimatedItemSize={200}
           renderItem={renderItem}
+          ListHeaderComponent={<View style={{paddingHorizontal: 6}} />}
           showsHorizontalScrollIndicator={false}
-          style={styles.flatlist}
           ListFooterComponent={<View style={styles.flatlist} />}
         />
+        <View style={{padding: 80}}>
+          <Text style={[defaultStyles.headline, {color: Colors.lightGray}]}>
+            Made with love in Trivandrum.
+          </Text>
+        </View>
       </ScrollView>
     </ScreenContent>
   );
@@ -154,8 +205,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.lightGray,
     borderRadius: widthPixel(16),
-    margin: widthPixel(6),
-    padding: widthPixel(8),
+    marginHorizontal: pixelSizeHorizontal(6),
+    marginVertical: pixelSizeVertical(6),
+    padding: pixelSizeHorizontal(8),
     elevation: 5,
     shadowColor: '#efefef',
   },
@@ -166,4 +218,13 @@ const styles = StyleSheet.create({
     color: Colors.dark,
   },
   flatlist: {padding: pixelSizeVertical(14)},
+  header: {
+    justifyContent: 'center',
+    // alignItems: 'center',
+    paddingHorizontal: pixelSizeHorizontal(12),
+    paddingBottom: pixelSizeHorizontal(16),
+    left: 0,
+    right: 0,
+    paddingTop: 25,
+  },
 });
