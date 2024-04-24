@@ -23,15 +23,17 @@ const SignUp = () => {
   const [countryCode, setCountryCode] = useState('+91');
   const [phoneNumber, setPhoneNumber] = useState('');
   const {navigate} = useNavigation();
+
   const handleLogin = () => {
-    console.log('login');
+    //@ts-ignore
+    navigate(SCREENS.DASHBOARD);
   };
   const handleSignUp = () => {
     // @ts-ignore
     navigate(SCREENS.LOGIN);
   };
   return (
-    <ScreenContent>
+    <ScreenContent containerStyle={defaultStyles.gap}>
       <Text
         style={{color: Colors.primary, fontFamily: fonts.regular.fontFamily}}>
         App Playgrounds

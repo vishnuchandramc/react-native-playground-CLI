@@ -6,6 +6,7 @@ import {SCREENS} from '../constants/Strings';
 import LaunchScreen from '../screens/LaunchScreen';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import SignUp from '../screens/auth/SignUp';
+import Dashboard from '../screens/home/Dashboard';
 
 const MainRoutes = () => {
   const Stack = createStackNavigator();
@@ -50,6 +51,18 @@ const MainRoutes = () => {
         <Stack.Screen
           name={SCREENS.LOGIN}
           component={Login}
+          //@ts-ignore
+          options={() => ({
+            headerShown: false,
+            transitionSpec: {
+              open: config,
+              close: config,
+            },
+          })}
+        />
+        <Stack.Screen
+          name={SCREENS.DASHBOARD}
+          component={Dashboard}
           //@ts-ignore
           options={() => ({
             headerShown: false,

@@ -11,7 +11,6 @@ import {
 export const defaultStyles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: pixelSizeHorizontal(12),
   },
   headline: {
     fontSize: fontPixel(28),
@@ -36,4 +35,5 @@ export const defaultStyles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: widthPixel(50),
   },
+  gap: {padding: pixelSizeHorizontal(12)},
 });

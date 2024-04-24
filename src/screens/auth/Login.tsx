@@ -7,7 +7,7 @@ import {fonts} from '../../constants/Fonts';
 
 const Login = () => {
   return (
-    <ScreenContent>
+    <ScreenContent containerStyle={defaultStyles.gap}>
       <Text
         style={{color: Colors.primary, fontFamily: fonts.regular.fontFamily}}>
         App Playgrounds

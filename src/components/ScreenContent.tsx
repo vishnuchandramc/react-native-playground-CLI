@@ -17,17 +17,20 @@ type ScreenContentProps = {
   barstyle?: barStyle;
   children?: React.ReactNode;
   backgroundColor?: string;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
 export const ScreenContent = ({
   children,
   barstyle,
   backgroundColor,
+  containerStyle,
 }: ScreenContentProps) => {
   return (
     <SafeAreaView
       style={[
         defaultStyles.container,
+        containerStyle,
         {backgroundColor: backgroundColor || Colors.background},
       ]}>
       <StatusBar
